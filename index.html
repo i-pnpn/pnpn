@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUNPUN</title>
+<meta name="description" content="not just a bird.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-screen="home">
+
+<!-- Background art layers -->
+<div id="bg" aria-hidden="true">
+  <div class="bg-layer" id="bg-stripes"></div>
+  <svg class="bg-star" style="left:6%;top:8%;width:26vmax;height:26vmax" viewBox="0 0 100 100">
+    <polygon points="50,0 60,35 98,35 68,57 78,94 50,72 22,94 32,57 2,35 40,35" fill="#000"/>
+  </svg>
+  <svg class="bg-star s2" style="right:4%;bottom:6%;width:34vmax;height:34vmax" viewBox="0 0 100 100">
+    <polygon points="50,0 60,35 98,35 68,57 78,94 50,72 22,94 32,57 2,35 40,35" fill="#fff"/>
+  </svg>
+  <!-- Per-screen artwork: assets/menus/<screen>.jpg (missing files fall back to the stripes) -->
+  <img class="menu-art" id="art-projects" src="assets/menus/projects.jpg" alt=""
+       onload="document.body.classList.add('has-art-projects')" onerror="this.remove()">
+  <img class="menu-art" id="art-about" src="assets/menus/about.jpg" alt=""
+       onload="document.body.classList.add('has-art-about')" onerror="this.remove()">
+  <img class="menu-art" id="art-contact" src="assets/menus/contact.jpg" alt=""
+       onload="document.body.classList.add('has-art-contact')" onerror="this.remove()">
+  <div class="bg-layer" id="bg-halftone"></div>
+  <div class="bg-layer" id="bg-vignette"></div>
+</div>
+<div id="slash" aria-hidden="true"></div>
+
+<!-- Hero art: assets/hero.png (transparent PNG) -->
+<img id="hero-art" src="assets/hero.png" alt="" onerror="this.remove()">
+
+<!-- Screen transition wipe -->
+<div id="wipe" aria-hidden="true">
+  <div class="pane p3"></div>
+  <div class="pane p2"></div>
+  <div class="pane p1"></div>
+  <div class="flash"></div>
+</div>
+
+<!-- Custom animated cursor + select sound -->
+<div id="cursor" aria-hidden="true"></div>
+<audio id="sfx-select" src="assets/sfx/select.mp3" preload="auto"></audio>
+
+<div id="shell">
+  <div id="hud-top">
+    <div class="hud-tag">Channel // PUNPUN</div>
+    <div class="hud-tag alt">not just a bird</div>
+  </div>
+
+  <div id="stage">
+
+    <!-- HOME -->
+    <section class="screen active" id="screen-home" aria-label="Main menu">
+      <div id="intro-eyebrow">Welcome to my channel</div>
+      <h1 id="big-name">
+        <span class="ransom" data-ransom="PUNPUN"></span>
+      </h1>
+      <p id="tagline">not just a bird.</p>
+      <nav id="menu" aria-label="Sections">
+        <button class="menu-item sel" data-target="projects">
+          <span class="ransom" data-ransom="VIDEOS"></span><span class="cursor-mark">◀</span>
+        </button>
+        <button class="menu-item" data-target="about">
+          <span class="ransom" data-ransom="ABOUT"></span><span class="cursor-mark">◀</span>
+        </button>
+        <button class="menu-item" data-target="contact">
+          <span class="ransom" data-ransom="SOCIALS"></span><span class="cursor-mark">◀</span>
+        </button>
+      </nav>
+    </section>
+
+    <!-- VIDEOS -->
+    <section class="screen sub" id="screen-projects" aria-label="Videos">
+      <div class="screen-head"><span class="ransom" data-ransom="VIDEOS"></span></div>
+      <button class="back-hint" data-back>ESC · Back</button>
+      <div class="grid-label"><span class="bar"></span>Watch</div>
+      <div id="video-grid" class="grid"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="screen sub align-right" id="screen-about" aria-label="About">
+      <div class="screen-head"><span class="ransom" data-ransom="ABOUT"></span></div>
+      <button class="back-hint" data-back>ESC · Back</button>
+      <div class="paper">
+        <figure class="about-photo">
+          <img src="assets/me.jpg" alt="Punpun, a bird figure holding a black and white umbrella">
+          <figcaption>PUNPUN</figcaption>
+        </figure>
+        <p class="quote">
+          <strong class="about-highlight">not just a bird.</strong>
+        </p>
+        <br>
+        <p>
+          I'm <strong class="about-highlight">punpun</strong>.
+          This is where my channel lives:
+          the videos, and every place you can find me.
+        </p>
+      </div>
+    </section>
+
+    <!-- SOCIALS -->
+    <section class="screen sub align-right" id="screen-contact" aria-label="Socials">
+      <div class="screen-head"><span class="ransom" data-ransom="SOCIALS"></span></div>
+      <button class="back-hint" data-back>ESC · Back</button>
+      <div class="paper" style="max-width:620px">
+        <p><strong>I HOPE THAT YOU NEVER FORGET ME</strong></p>
+      </div>
+      <div class="contact-list">
+        <a class="contact-chip" href="https://www.youtube.com/@oh-PunPun" target="_blank" rel="noopener"><span>YouTube ↗</span></a>
+        <a class="contact-chip" href="https://www.instagram.com/i.pnpn/" target="_blank" rel="noopener"><span>Instagram ↗</span></a>
+        <a class="contact-chip" href="https://www.tiktok.com/@namellessmonster" target="_blank" rel="noopener"><span>TikTok ↗</span></a>
+      </div>
+      <p class="credit">Design based on
+        <a href="https://github.com/Numal400/Persona_style_portfolio" target="_blank" rel="noopener">Persona_style_portfolio</a>
+        by Numal400</p>
+    </section>
+
+  </div>
+
+  <div id="hud-bottom">
+    <span><span class="key">↑↓</span>Select</span>
+    <span><span class="key">Enter</span>Confirm</span>
+    <span><span class="key">Esc</span>Back</span>
+    <span style="margin-left:auto;opacity:.8" id="clock"></span>
+  </div>
+</div>
+
+<!-- MVC: model = data, view = DOM, controller = events -->
+<script src="js/model.js" defer></script>
+<script src="js/view.js" defer></script>
+<script src="js/controller.js" defer></script>
+</body>
+</html>
