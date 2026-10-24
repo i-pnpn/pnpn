@@ -318,7 +318,6 @@ body[data-screen]:not([data-screen="home"]) #slash{
 body[data-screen]:not([data-screen="home"]) #hero-art{
   transform:translateX(60%) skewX(-6deg);opacity:0;
 }
-@media (max-width:900px){#hero-art{max-width:70vw;opacity:.5;}}
 
 /* 2. Project card thumbnails */
 .card .thumb{
@@ -591,21 +590,46 @@ body.has-art-home #big-name .ch:not(.box):not(.boxw){
   font-weight: 700;
 }
 /* ============ PUNPUN ADDITIONS ============ */
-/* hero: white outline so the black umbrella reads on the black slash */
-#hero-art{
-  filter:drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff)
-         drop-shadow(-14px 10px 0 rgba(0,73,230,.85));
-  transform-origin:50% 12%;animation:birdSway 5s ease-in-out infinite alternate;
+/* hero art has its white outline + blue shadow baked into the PNG, so no runtime filters */
+#hero-art{filter:none;}
+@media (pointer:fine){
+  #hero-art{transform-origin:50% 12%;animation:birdSway 5s ease-in-out infinite alternate;}
 }
 body[data-screen]:not([data-screen="home"]) #hero-art{animation:none;}
 @keyframes birdSway{from{transform:rotate(-2deg);}to{transform:rotate(2deg);}}
-/* video cards */
+
+/* video cards: thumbnail first, player loads on tap */
 .vcard .frame{aspect-ratio:16/9;background:var(--black);margin:-20px -22px 16px;position:relative;
   clip-path:polygon(0 0,100% 0,100% 94%,0 100%);}
 .vcard iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.vcard .play{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;cursor:pointer;background:#000;}
+.vcard .play img{width:100%;height:100%;object-fit:cover;opacity:.8;display:block;}
+.vcard .play::after{content:"\25B6";position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%) skewX(-8deg);background:var(--red);color:#fff;
+  font-size:26px;padding:10px 24px;box-shadow:5px 5px 0 #000;}
 .vcard:hover{transform:rotate(0deg) scale(1.01) !important;}
 .card .meta a.go{text-decoration:none;}
 #video-grid{padding-bottom:6vh;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));}
-.credit{margin-top:-2vh;padding-bottom:5vh;font-size:14px;letter-spacing:.08em;opacity:.9;
+.credit{margin-top:-2vh;margin-bottom:5vh;font-size:14px;letter-spacing:.08em;
   background:var(--black);padding:6px 12px;display:inline-block;}
 .credit a{color:var(--white);}
+#tagline{width:fit-content;}
+
+/* ============ PHONES / TOUCH: lighter + laid out properly ============ */
+@media (hover:none), (max-width:820px){
+  #bg{inset:0;}
+  #bg-stripes,#bg-halftone,.bg-star{animation:none;}
+  .bg-star{display:none;}
+  #bg-halftone{mix-blend-mode:normal;opacity:.45;}
+  .menu-art{will-change:auto;}
+  .card,.card.feat,.card.feat:hover{filter:none;}
+  .vcard{border-bottom:6px solid var(--red-deep);}
+  #hud-bottom{display:none;}
+  #shell{height:100vh;height:100dvh;}
+  #hero-art{height:36vh;max-width:44vw;opacity:1;}
+  #big-name .ransom{font-size:15vw;}
+  #intro-eyebrow{letter-spacing:.22em;}
+  .menu-item .ransom{font-size:40px;}
+  #tagline{max-width:60%;}
+  .about-photo{width:min(200px,45%);}
+}

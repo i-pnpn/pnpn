@@ -41,7 +41,6 @@ goTo(screen) {
   /* ---------- Screen data loading ---------- */
   loadVideos() {
     View.renderVideos(Model.videos);
-    View.loadFrames();
     Model.state.videosLoaded = true;
   },
 

@@ -122,13 +122,22 @@ el.appendChild(span);
       card.style.setProperty("--tilt", ((this.hash(v.id) % 5) - 2) * 0.8 + "deg");
       card.style.setProperty("--d", i * 90 + "ms");
       card.innerHTML = `
-        <div class="frame"><iframe data-src="https://www.youtube-nocookie.com/embed/${v.id}"
-          title="YouTube video ${i + 1}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; picture-in-picture"
-          allowfullscreen></iframe></div>
+        <div class="frame"><button class="play" type="button" aria-label="Play video ${i + 1}">
+          <img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="" loading="lazy"></button></div>
         <span class="lang" style="--lc:#ff3b3b">YouTube</span>
         <h3></h3>
         <div class="meta"><span>#${i + 1}</span>
           <a class="go" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">Open on YouTube</a></div>`;
+      // Light page: the heavy YouTube player only loads when you tap play
+      card.querySelector(".play").addEventListener("click", e => {
+        const f = document.createElement("iframe");
+        f.src = `https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&playsinline=1`;
+        f.title = "YouTube video " + (i + 1);
+        f.setAttribute("allow", "autoplay; accelerometer; encrypted-media; picture-in-picture");
+        f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+        f.allowFullscreen = true;
+        e.currentTarget.parentElement.replaceChildren(f);
+      });
       const h3 = card.querySelector("h3");
       this.setTitle(h3, "Video " + (i + 1));
       Model.fetchTitle(v.id).then(t => { if (t) this.setTitle(h3, t); });
@@ -136,15 +145,9 @@ el.appendChild(span);
     });
   },
 
-  // Start loading the players only once the Videos screen is opened
-  loadFrames() {
-    this.els.videoGrid.querySelectorAll("iframe[data-src]").forEach(f => {
-      f.src = f.dataset.src; f.removeAttribute("data-src");
-    });
-  },
-
   /* ---------- Ambient: clock, parallax, animated cursor ---------- */
   startClock() {
+    if (matchMedia("(pointer:coarse)").matches) return;
     setInterval(() => {
       this.els.clock.textContent =
         new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) ;
@@ -152,7 +155,7 @@ el.appendChild(span);
   },
 
   startParallax() {
-    if (this.reducedMotion) return;
+    if (this.reducedMotion || matchMedia("(pointer:coarse)").matches) return;
     const stripes = document.getElementById("bg-stripes");
     const halftone = document.getElementById("bg-halftone");
     const arts = [...document.querySelectorAll(".menu-art")];
