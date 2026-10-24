@@ -633,3 +633,26 @@ body[data-screen]:not([data-screen="home"]) #hero-art{animation:none;}
   #tagline{max-width:60%;}
   .about-photo{width:min(200px,45%);}
 }
+
+/* ============ ABOUT: photo beside the text, never clipped ============ */
+.about-paper{display:flex;align-items:center;gap:clamp(20px,4vw,40px);max-width:820px;}
+.about-paper .about-photo{float:none;flex:0 0 auto;width:min(230px,38%);margin:0;}
+.about-paper .quote{flex:1;min-width:0;margin:0;font-family:'Archivo Black','Arial Black',Impact,sans-serif;
+  font-size:clamp(26px,4.2vw,50px);line-height:1.5;text-transform:none;}
+.about-paper .about-highlight{font-weight:400;padding:2px 10px;}
+.screen.align-right .about-paper .about-photo{float:none;margin:0;}
+@media (max-width:640px){
+  .about-paper{flex-direction:column;text-align:center;padding:26px 20px;}
+  .about-paper .about-photo{width:min(210px,62%);}
+  .about-paper .quote{font-size:clamp(24px,8vw,38px);}
+}
+
+/* ============ ABOUT: photo and text side by side, nothing floats out of the paper ============ */
+#screen-about .paper{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:28px;width:100%;max-width:760px;padding:38px 34px;}
+#screen-about .about-photo{float:none;margin:0;width:min(240px,100%);flex:0 0 auto;transform:rotate(-3deg);}
+#screen-about .about-text{flex:1 1 260px;min-width:0;}
+#screen-about .about-text .quote{font-family:'Archivo Black','Arial Black',Impact,sans-serif;font-weight:400;font-size:clamp(28px,5vw,48px);line-height:1.25;}
+@media (hover:none), (max-width:820px){
+  #screen-about .paper{padding:30px 22px;justify-content:center;text-align:center;}
+  #screen-about .about-photo{width:min(220px,70%);}
+}
