@@ -12,6 +12,7 @@ const Controller = {
   this.bindMenu();
   this.bindKeyboard();
   this.bindAudioUnlock();
+  this.bindMusic();
 },
 
   /* ---------- Navigation ---------- */
@@ -47,6 +48,39 @@ goTo(screen) {
   /* ---------- Sound (browsers block audio until first user gesture) ---------- */
   play() {
     if (this.audioUnlocked) View.playSelect();
+  },
+
+  /* ---------- Background song ---------- */
+  bindMusic() {
+    const bgm = document.getElementById("bgm");
+    const btn = document.getElementById("music-toggle");
+    if (!bgm || !btn) return;
+    bgm.volume = 0.5;
+    let userPaused = false;
+    const paint = () => {
+      const on = !bgm.paused;
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-pressed", on);
+      btn.firstElementChild.textContent = on ? "♪ Music on" : "♪ Music off";
+    };
+    const play = () => { bgm.play().then(paint).catch(paint); };
+
+    // Browsers only allow sound after a tap/key press, so start on the first one
+    const first = e => {
+      if (e.target.closest && e.target.closest("#music-toggle")) return;
+      if (!userPaused) play();
+    };
+    addEventListener("pointerdown", first, { once: true, capture: true });
+    addEventListener("keydown", first, { once: true, capture: true });
+
+    btn.addEventListener("click", () => {
+      if (bgm.paused) { userPaused = false; play(); }
+      else { userPaused = true; bgm.pause(); paint(); }
+    });
+    // Starting a video pauses the song so the two never overlap
+    document.addEventListener("video-play", () => { if (!bgm.paused) { bgm.pause(); paint(); } });
+    bgm.addEventListener("play", paint);
+    bgm.addEventListener("pause", paint);
   },
 
   bindAudioUnlock() {

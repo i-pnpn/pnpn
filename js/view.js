@@ -130,6 +130,7 @@ el.appendChild(span);
           <a class="go" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">Open on YouTube</a></div>`;
       // Light page: the heavy YouTube player only loads when you tap play
       card.querySelector(".play").addEventListener("click", e => {
+        document.dispatchEvent(new Event("video-play")); // pause the background song
         const f = document.createElement("iframe");
         f.src = `https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&playsinline=1`;
         f.title = "YouTube video " + (i + 1);

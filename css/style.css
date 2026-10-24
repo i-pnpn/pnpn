@@ -656,3 +656,12 @@ body[data-screen]:not([data-screen="home"]) #hero-art{animation:none;}
   #screen-about .paper{padding:30px 22px;justify-content:center;text-align:center;}
   #screen-about .about-photo{width:min(220px,70%);}
 }
+
+/* ============ MUSIC BUTTON ============ */
+#music-toggle{position:fixed;z-index:60;left:16px;bottom:max(16px,env(safe-area-inset-bottom));
+  font:700 15px/1 "Barlow Condensed",system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--black);color:var(--white);border:2px solid var(--white);padding:10px 16px;cursor:pointer;
+  transform:skewX(-10deg);box-shadow:4px 4px 0 var(--red-deep);}
+#music-toggle span{display:block;transform:skewX(10deg);}
+#music-toggle.on{background:var(--white);color:var(--black);border-color:var(--black);}
+@media (hover:hover) and (min-width:821px){#music-toggle{left:auto;right:18px;bottom:64px;}}
